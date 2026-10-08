@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Generate the animated profile hero banners (dark.svg / light.svg).
+"""Generate the animated profile SVGs: hero banners (dark.svg / light.svg) and the
+data sentinel centerpiece (data_sentinel.svg / data_sentinel-light.svg).
 
 Pure SVG + SMIL, no JavaScript. Both themes come from the same layout code so
 they never drift apart.
@@ -510,142 +511,271 @@ def build(name, t, ascii_rows):
     return "\n".join(o) + "\n"
 
 
-PW, PH = 1180, 330
-STAGES = [
-    ("TRIGGER", "cron · webhook", "inbox · file drop"),
-    ("BOT", "AutomationEdge", "Selenium · DOM"),
-    ("INTEGRATE", "REST APIs · JSON", "auth · retries"),
-    ("PERSIST", "PostgreSQL", "audit trail"),
-    ("WATCHDOG", "health checks", "SLA timers"),
-]
-ESCALATION = ["detect", "L1 · on-call", "L2 · team lead", "L3 · management", "resolved ✓"]
+SW, SH = 1180, 560
+EYE = (590, 152)
+# DOM tree: leaves spread evenly, parents centred over their children
+DOM_LEAVES = [("nav", ["a", "a"]), ("main", ["h1", "p", "img"]),
+              ("table", ["tr", "td", "td"]), ("form", ["input", "button"])]
 
 
-def build_pipeline(name, t):
-    """Animated 'how my automations run' diagram: data flows through five stages, then escalates."""
-    T = 10.0
+def build_sentinel(name, t):
+    """Ambient 'data sentinel': a glass octahedron drone scanning a DOM tree below it."""
+    dark = name == "dark"
+    rnd = random.Random(11)
+    P = 5.0                                   # scan period
     o = []
     a = o.append
 
     def kt(*ts):
-        return ";".join(f"{x / T:.4f}" for x in ts)
+        return ";".join(f"{x / P:.4f}" for x in ts)
 
-    a(f'<svg xmlns="http://www.w3.org/2000/svg" width="{PW}" height="{PH}" viewBox="0 0 {PW} {PH}" '
-      f'role="img" aria-labelledby="ptitle pdesc">')
-    a('<title id="ptitle">How my automations run</title>')
-    a('<desc id="pdesc">Pipeline: trigger, bot, API integration, PostgreSQL, watchdog — failures escalate '
-      'from detection through L1, L2 and L3 until resolved.</desc>')
+    hover = ('<animateTransform attributeName="transform" type="translate" values="0 0;0 -12;0 0" dur="6s" '
+             'repeatCount="indefinite" calcMode="spline" keySplines="0.45 0 0.55 1;0.45 0 0.55 1"/>')
+
+    a(f'<svg xmlns="http://www.w3.org/2000/svg" width="{SW}" height="{SH}" viewBox="0 0 {SW} {SH}" '
+      f'role="img" aria-labelledby="stitle sdesc">')
+    a('<title id="stitle">Data Sentinel</title>')
+    a('<desc id="sdesc">A glass octahedron drone hovers and sweeps a holographic scan beam over a DOM tree; '
+      'elements light up and stream data back as the beam passes.</desc>')
+
+    # ── defs
     a("<defs>")
-    a(f'<clipPath id="pcard"><rect width="{PW}" height="{PH}" rx="24"/></clipPath>')
-    a(f'<linearGradient id="paccent" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="600" y2="0" spreadMethod="reflect">'
+    a(f'<clipPath id="scard"><rect width="{SW}" height="{SH}" rx="24"/></clipPath>')
+    a(f'<linearGradient id="saccent" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="600" y2="0" spreadMethod="reflect">'
       f'<stop offset="0" stop-color="{t["a1"]}"/><stop offset="0.5" stop-color="{t["a2"]}"/>'
       f'<stop offset="1" stop-color="{t["a3"]}"/>'
       f'<animateTransform attributeName="gradientTransform" type="translate" values="0 0;600 0;0 0" '
       f'dur="9s" repeatCount="indefinite"/></linearGradient>')
-    a(f'<linearGradient id="psheen" x1="0" y1="0" x2="0" y2="1">'
-      f'<stop offset="0" stop-color="#FFFFFF" stop-opacity="{t["sheen"]}"/>'
-      f'<stop offset="0.5" stop-color="#FFFFFF" stop-opacity="0"/></linearGradient>')
+    a(f'<linearGradient id="sedge" x1="0" y1="0" x2="1" y2="1">'
+      f'<stop offset="0" stop-color="{t["a1"]}"/><stop offset="0.5" stop-color="{t["a2"]}"/>'
+      f'<stop offset="1" stop-color="{t["a3"]}"/></linearGradient>')
+    # upper facets: white glass on dark; a faint accent tint on light so they don't vanish into white
+    for gid, col, op0, op1 in (("sf1", "#FFFFFF" if dark else t["a2"], 0.30 if dark else 0.16, 0.04 if dark else 0.02),
+                               ("sf2", "#FFFFFF" if dark else t["a1"], 0.12 if dark else 0.10, 0.02)):
+        a(f'<linearGradient id="{gid}" x1="0" y1="0" x2="1" y2="1">'
+          f'<stop offset="0" stop-color="{col}" stop-opacity="{op0}"/>'
+          f'<stop offset="1" stop-color="{col}" stop-opacity="{op1}"/></linearGradient>')
+    a(f'<linearGradient id="sf3" x1="0" y1="0" x2="0" y2="1">'
+      f'<stop offset="0" stop-color="{t["a1"]}" stop-opacity="{0.22 if dark else 0.14}"/>'
+      f'<stop offset="1" stop-color="{t["a1"]}" stop-opacity="0.02"/></linearGradient>')
+    a(f'<linearGradient id="sf4" x1="0" y1="0" x2="0" y2="1">'
+      f'<stop offset="0" stop-color="{t["a2"]}" stop-opacity="{0.20 if dark else 0.14}"/>'
+      f'<stop offset="1" stop-color="{t["a3"]}" stop-opacity="0.03"/></linearGradient>')
+    a(f'<radialGradient id="score"><stop offset="0" stop-color="{t["a2"]}" stop-opacity="0.95"/>'
+      f'<stop offset="0.35" stop-color="{t["a2"]}" stop-opacity="0.45"/>'
+      f'<stop offset="0.7" stop-color="{t["a1"]}" stop-opacity="0.15"/>'
+      f'<stop offset="1" stop-color="{t["a1"]}" stop-opacity="0"/></radialGradient>')
+    a(f'<linearGradient id="scone" x1="0" y1="0" x2="0" y2="1">'
+      f'<stop offset="0" stop-color="{t["a2"]}" stop-opacity="{0.28 if dark else 0.20}"/>'
+      f'<stop offset="1" stop-color="{t["a2"]}" stop-opacity="0.01"/></linearGradient>')
+    a(f'<linearGradient id="sline" x1="0" y1="0" x2="1" y2="0">'
+      f'<stop offset="0" stop-color="{t["a2"]}" stop-opacity="0"/>'
+      f'<stop offset="0.5" stop-color="{t["a2"]}" stop-opacity="1"/>'
+      f'<stop offset="1" stop-color="{t["a2"]}" stop-opacity="0"/></linearGradient>')
+    a(f'<linearGradient id="strail" x1="0" y1="0" x2="0" y2="1">'
+      f'<stop offset="0" stop-color="{t["a2"]}" stop-opacity="0"/>'
+      f'<stop offset="1" stop-color="{t["a2"]}" stop-opacity="{0.22 if dark else 0.16}"/></linearGradient>')
     for i, col in enumerate((t["a1"], t["a2"], t["a3"])):
-        a(f'<radialGradient id="pblob{i}"><stop offset="0" stop-color="{col}" stop-opacity="{t["blob"] * 0.8}"/>'
+        a(f'<radialGradient id="sblob{i}"><stop offset="0" stop-color="{col}" stop-opacity="{t["blob"]}"/>'
           f'<stop offset="1" stop-color="{col}" stop-opacity="0"/></radialGradient>')
-    a(f'<pattern id="pgrid" width="32" height="32" patternUnits="userSpaceOnUse">'
-      f'<path d="M32 0H0V32" fill="none" stroke="{t["grid"]}"/></pattern>')
-    a('<filter id="pglow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4"/></filter>')
+    a('<radialGradient id="sfade" cx="0.5" cy="0.55" r="0.6"><stop offset="0" stop-color="#fff"/>'
+      '<stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>')
+    a(f'<mask id="sgridmask"><rect width="{SW}" height="{SH}" fill="url(#sfade)"/></mask>')
+    a(f'<pattern id="sgrid" width="36" height="36" patternUnits="userSpaceOnUse">'
+      f'<path d="M36 0H0V36" fill="none" stroke="{t["grid"]}"/></pattern>')
+    a('<filter id="sfrost" x="-20%" y="-20%" width="140%" height="140%">'
+      '<feGaussianBlur stdDeviation="22"/><feColorMatrix type="saturate" values="1.7"/></filter>')
+    a('<filter id="sglow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5"/></filter>')
+    a('<filter id="sblur" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="14"/></filter>')
+    # octahedron silhouette (front vertex is interior, so the outline never changes)
+    T_, B_, L_, R_ = (590, 54), (590, 250), (500, 152), (680, 152)
+    sil = f"M{T_[0]} {T_[1]}L{R_[0]} {R_[1]}L{B_[0]} {B_[1]}L{L_[0]} {L_[1]}Z"
+    a(f'<clipPath id="soct"><path d="{sil}"/></clipPath>')
+    cone = f"M590 262L250 505L930 505Z"
+    a(f'<clipPath id="scone-clip"><path d="{cone}"/></clipPath>')
+    a('<g id="sblobs">')
+    for i, (cx, cy, r, dx, dy, dur) in enumerate(((250, 120, 330, 140, 80, 21), (930, 140, 340, -150, 90, 25),
+                                                   (600, 520, 330, 120, -90, 19))):
+        a(f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="url(#sblob{i})">'
+          f'<animate attributeName="cx" values="{cx};{cx + dx};{cx}" dur="{dur}s" repeatCount="indefinite" '
+          f'calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>'
+          f'<animate attributeName="cy" values="{cy};{cy + dy};{cy}" dur="{dur * 1.3:.1f}s" repeatCount="indefinite" '
+          f'calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/></circle>')
+    a("</g>")
     a("</defs>")
 
-    a('<g clip-path="url(#pcard)">')
-    a(f'<rect width="{PW}" height="{PH}" fill="{t["bg"]}"/>')
-    for i, (cx, cy, r, dx, dur) in enumerate(((180, 60, 300, 120, 20), (620, 300, 320, -140, 24), (1040, 80, 300, -100, 22))):
-        a(f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="url(#pblob{i})">'
-          f'<animate attributeName="cx" values="{cx};{cx + dx};{cx}" dur="{dur}s" repeatCount="indefinite"/></circle>')
-    a(f'<rect width="{PW}" height="{PH}" fill="url(#pgrid)"/>')
+    a('<g clip-path="url(#scard)">')
+    a(f'<rect width="{SW}" height="{SH}" fill="{t["bg"]}"/>')
+    a('<use href="#sblobs"/>')
+    a(f'<rect width="{SW}" height="{SH}" fill="url(#sgrid)" mask="url(#sgridmask)"/>')
 
-    # header
-    a(f'<text x="40" y="46" font-family="{MONO}" font-size="14" fill="{t["a3"]}">➜ <tspan fill="{t["a2"]}">~/pipeline</tspan>'
-      f'<tspan fill="{t["soft"]}">  how my automations run, end to end</tspan></text>')
-    a(f'<circle cx="{PW - 140}" cy="41" r="3.5" fill="{t["a3"]}">'
-      f'<animate attributeName="opacity" values="1;0.3;1" dur="1.8s" repeatCount="indefinite"/></circle>')
-    a(f'<text x="{PW - 40}" y="46" text-anchor="end" font-family="{MONO}" font-size="12" fill="{t["muted"]}">'
-      f'running 24/7</text>')
+    # particles
+    for _ in range(36):
+        x, y = rnd.uniform(20, SW - 20), rnd.uniform(30, SH - 10)
+        dur, rise, beg = rnd.uniform(7, 15), rnd.uniform(40, 110), -rnd.uniform(0, 15)
+        col = rnd.choice((t["a1"], t["a2"], t["a3"]))
+        pk = t["particle"] * rnd.uniform(0.4, 1)
+        a(f'<circle cx="{f(x)}" cy="{f(y)}" r="{f(rnd.uniform(0.7, 1.9))}" fill="{col}" opacity="0">'
+          f'<animate attributeName="cy" values="{f(y)};{f(y - rise)}" dur="{f(dur)}s" begin="{f(beg)}s" repeatCount="indefinite"/>'
+          f'<animate attributeName="opacity" values="0;{f(pk)};0" dur="{f(dur)}s" begin="{f(beg)}s" repeatCount="indefinite"/></circle>')
 
-    # stages
-    nw, nh, ny, gap = 188, 118, 74, 40
-    xs = [40 + i * (nw + gap) for i in range(len(STAGES))]
-    cy = ny + nh / 2
-    arrive = [0.4] + [1.0 + i * 1.0 for i in range(1, len(STAGES))]
+    # ── DOM tree
+    fs = 10.5
+    leaves, parents = [], []
+    step = (880 - 300) / (sum(len(c) for _, c in DOM_LEAVES) - 1)
+    k = 0
+    for tag, kids in DOM_LEAVES:
+        xs = []
+        for kid in kids:
+            leaves.append((300 + k * step, 462, kid))
+            xs.append(300 + k * step)
+            k += 1
+        parents.append((sum(xs) / len(xs), 392, tag, xs))
+    root = (590, 322, "body")
 
-    # connectors + packets
-    for i in range(len(STAGES) - 1):
-        x1, x2 = xs[i] + nw, xs[i + 1]
-        a(f'<line x1="{x1}" y1="{cy}" x2="{x2}" y2="{cy}" stroke="{t["hair"]}" stroke-width="2"/>')
-        a(f'<line x1="{x1}" y1="{cy}" x2="{x2}" y2="{cy}" stroke="url(#paccent)" stroke-width="2" '
-          f'stroke-dasharray="4 6" opacity="0.7"><animate attributeName="stroke-dashoffset" values="20;0" '
-          f'dur="0.8s" repeatCount="indefinite"/></line>')
-        s, e = arrive[i] + 0.15, arrive[i + 1]
-        for glow in (True, False):
-            a(f'<circle cx="0" cy="0" r="{6 if glow else 3.5}" fill="{t["a2"] if glow else t["text"]}" opacity="0"'
-              f'{" filter=" + chr(34) + "url(#pglow)" + chr(34) if glow else ""}>'
-              f'<animateMotion path="M{x1} {cy}H{x2}" keyPoints="0;0;1;1" keyTimes="{kt(0, s, e, T)}" '
-              f'calcMode="linear" dur="{T}s" repeatCount="indefinite"/>'
-              f'<animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="{kt(0, s, s + 0.05, e - 0.05, e, T)}" '
-              f'dur="{T}s" repeatCount="indefinite"/></circle>')
+    def hit(y):
+        return 0.6 + (y - 300) / 200 * 3.0
 
-    for i, (title, l1, l2) in enumerate(STAGES):
-        x = xs[i]
-        col = (t["a1"], t["a2"], t["a3"], t["a1"], t["a2"])[i]
-        a(f'<rect x="{x}" y="{ny}" width="{nw}" height="{nh}" rx="16" fill="{t["panel"]}" fill-opacity="{t["panel_alpha"]}"/>')
-        a(f'<rect x="{x}" y="{ny}" width="{nw}" height="{nh}" rx="16" fill="url(#psheen)"/>')
-        a(f'<rect x="{x + 0.5}" y="{ny + 0.5}" width="{nw - 1}" height="{nh - 1}" rx="15.5" fill="none" stroke="{t["hair"]}"/>')
-        # pulse when the packet arrives
-        p = arrive[i]
-        a(f'<rect x="{x + 0.5}" y="{ny + 0.5}" width="{nw - 1}" height="{nh - 1}" rx="15.5" fill="none" '
-          f'stroke="url(#paccent)" stroke-width="1.6" opacity="0.15">'
-          f'<animate attributeName="opacity" values="0.15;0.15;1;0.15;0.15" '
-          f'keyTimes="{kt(0, p - 0.3, p, p + 0.9, T)}" dur="{T}s" repeatCount="indefinite"/></rect>')
-        a(f'<text x="{x + 18}" y="{ny + 28}" font-family="{MONO}" font-size="11" fill="{t["muted"]}">0{i + 1}</text>')
-        a(f'<circle cx="{x + nw - 22}" cy="{ny + 24}" r="4" fill="{col}">'
-          f'<animate attributeName="r" values="4;4;6.5;4;4" keyTimes="{kt(0, p - 0.2, p, p + 0.4, T)}" '
-          f'dur="{T}s" repeatCount="indefinite"/></circle>')
-        a(f'<text x="{x + 18}" y="{ny + 58}" font-family="{MONO}" font-size="15" font-weight="700" '
-          f'letter-spacing="1.5" fill="{t["text"]}">{title}</text>')
-        a(f'<text x="{x + 18}" y="{ny + 82}" font-family="{MONO}" font-size="12" fill="{t["soft"]}">{esc(l1)}</text>')
-        a(f'<text x="{x + 18}" y="{ny + 100}" font-family="{MONO}" font-size="12" fill="{t["muted"]}">{esc(l2)}</text>')
+    # connectors
+    edges = [(root[0], root[1], px, py) for px, py, _, _ in parents]
+    edges += [(px, py, lx, 462) for px, py, _, xs in parents for lx in xs]
+    for x1, y1, x2, y2 in edges:
+        my = (y1 + y2) / 2
+        a(f'<path d="M{f(x1)} {y1 + 12}V{f(my)}H{f(x2)}V{y2 - 12}" fill="none" stroke="{t["hair"]}" stroke-width="1.2"/>')
+        h = hit(my)
+        a(f'<path d="M{f(x1)} {y1 + 12}V{f(my)}H{f(x2)}V{y2 - 12}" fill="none" stroke="{t["a2"]}" stroke-width="1.2" opacity="0">'
+          f'<animate attributeName="opacity" values="0;0;0.8;0;0" keyTimes="{kt(0, h - 0.05, h + 0.1, h + 1.1, P)}" '
+          f'dur="{P}s" repeatCount="indefinite"/></path>')
 
-    # escalation lane
-    ly = 252
-    a(f'<text x="40" y="{ly + 5}" font-family="{MONO}" font-size="12" letter-spacing="1.5" fill="{t["muted"]}">'
-      f'ON FAILURE ›</text>')
-    lx0, lx1 = 170, PW - 40
-    n = len(ESCALATION)
-    cw = 156
-    step = (lx1 - lx0 - cw) / (n - 1)
-    chip_x = [lx0 + k * step for k in range(n)]
-    lit = [4.4 + k * 0.85 for k in range(n)]
-    reset = 9.4
-    a(f'<line x1="{lx0 + cw / 2}" y1="{ly}" x2="{chip_x[-1] + cw / 2}" y2="{ly}" stroke="{t["hair"]}" stroke-width="2"/>')
-    xs_prog = ";".join(f(v) for v in [lx0 + cw / 2, lx0 + cw / 2] + [c + cw / 2 for c in chip_x] + [chip_x[-1] + cw / 2, lx0 + cw / 2, lx0 + cw / 2])
-    a(f'<line x1="{lx0 + cw / 2}" y1="{ly}" x2="{lx0 + cw / 2}" y2="{ly}" stroke="url(#paccent)" stroke-width="2">'
-      f'<animate attributeName="x2" values="{xs_prog}" keyTimes="{kt(0, lit[0] - 0.4, *lit, reset, reset + 0.01)};1" '
-      f'dur="{T}s" repeatCount="indefinite"/></line>')
-    for k, label in enumerate(ESCALATION):
-        x = chip_x[k]
-        done = k == n - 1
-        col = t["a3"] if done else (t["a2"] if k == 0 else t["a1"])
-        a(f'<rect x="{f(x)}" y="{ly - 17}" width="{cw}" height="34" rx="17" fill="{t["pill_fill"]}" stroke="{t["hair"]}"/>')
-        a(f'<g opacity="0.0"><animate attributeName="opacity" values="0;0;1;1;0;0" '
-          f'keyTimes="{kt(0, lit[k] - 0.15, lit[k], reset, reset + 0.3, T)}" dur="{T}s" repeatCount="indefinite"/>'
-          f'<rect x="{f(x)}" y="{ly - 17}" width="{cw}" height="34" rx="17" fill="{col}" filter="url(#pglow)" opacity="0.3"/>'
-          f'<rect x="{f(x)}" y="{ly - 17}" width="{cw}" height="34" rx="17" fill="{t["pill_fill"]}" stroke="{col}" stroke-width="1.4"/>'
+    def node(cx, cy, label, delay=0.0, packet=False):
+        w = len(label) * fs * ADV + (24 if len(label) > 2 else 26)
+        if label in ("body", "nav", "main", "table", "form"):
+            label = f"<{label}>"
+            w = len(label) * fs * ADV + 20
+        x, y, h = cx - w / 2, cy - 12, 24
+        hh = hit(cy) + delay
+        a(f'<rect x="{f(x)}" y="{y}" width="{f(w)}" height="{h}" rx="7" fill="{t["panel"]}" fill-opacity="{0.55 if dark else 0.8}" '
+          f'stroke="{t["hair"]}"/>')
+        a(f'<g opacity="0"><animate attributeName="opacity" values="0;0;1;0.15;0;0" '
+          f'keyTimes="{kt(0, hh - 0.05, hh + 0.08, hh + 0.9, hh + 1.5, P)}" dur="{P}s" repeatCount="indefinite"/>'
+          f'<rect x="{f(x)}" y="{y}" width="{f(w)}" height="{h}" rx="7" fill="{t["a2"]}" opacity="0.45" filter="url(#sglow)"/>'
+          f'<rect x="{f(x)}" y="{y}" width="{f(w)}" height="{h}" rx="7" fill="{t["pill_fill"]}" stroke="url(#saccent)" stroke-width="1.3"/>'
           f'</g>')
-        a(f'<circle cx="{f(x + 18)}" cy="{ly}" r="3.5" fill="{col}"/>')
-        a(f'<text x="{f(x + 30)}" y="{ly + 4.5}" font-family="{MONO}" font-size="12.5" fill="{t["text"]}">{esc(label)}</text>')
+        a(f'<text x="{f(cx)}" y="{cy + 3.8}" text-anchor="middle" font-family="{MONO}" font-size="{fs}" fill="{t["muted"]}">'
+          f'{esc(label)}<animate attributeName="fill" values="{t["muted"]};{t["muted"]};{t["text"]};{t["muted"]};{t["muted"]}" '
+          f'keyTimes="{kt(0, hh - 0.05, hh + 0.08, hh + 0.9, P)}" dur="{P}s" repeatCount="indefinite"/></text>')
+        if packet:   # extracted data streams back up to the sentinel's eye
+            s, e = hh + 0.1, hh + 1.0
+            path = f"M{f(cx)} {y}L{EYE[0]} {EYE[1] + 40}"
+            for r, op, flt in ((4.5, 0.6, True), (2, 1, False)):
+                a(f'<circle r="{r}" fill="{t["a3"] if not flt else t["a2"]}" opacity="0"'
+                  f'{" filter=" + chr(34) + "url(#sglow)" + chr(34) if flt else ""}>'
+                  f'<animateMotion path="{path}" keyPoints="0;0;1;1" keyTimes="{kt(0, s, e, P)}" calcMode="spline" '
+                  f'keySplines="0 0 1 1;0.5 0 0.3 1;0 0 1 1" dur="{P}s" repeatCount="indefinite"/>'
+                  f'<animate attributeName="opacity" values="0;0;{op};{op};0;0" keyTimes="{kt(0, s, s + 0.1, e - 0.2, e, P)}" '
+                  f'dur="{P}s" repeatCount="indefinite"/></circle>')
 
-    a(f'<text x="40" y="{PH - 22}" font-family="{MONO}" font-size="11.5" fill="{t["muted"]}">'
-      f'each tier gets a window to acknowledge before the next one is paged</text>')
+    node(*root[:3])
+    for px, py, tag, _ in parents:
+        node(px, py, tag)
+    for i, (lx, ly, kid) in enumerate(leaves):
+        node(lx, ly, kid, delay=0.0, packet=i % 3 != 1)
+
+    # ── scan beam (moves with the hover so it stays attached to the emitter)
+    a('<g>' + hover)
+    a(f'<path d="{cone}" fill="url(#scone)"/>')
+    a(f'<path d="M590 262L250 505M590 262L930 505" stroke="{t["a2"]}" stroke-opacity="0.25" stroke-width="1"/>')
+    a('<g clip-path="url(#scone-clip)">')
+    a(f'<rect x="240" y="260" width="700" height="46" fill="url(#strail)" opacity="0">'
+      f'<animate attributeName="y" values="254;254;454;454" keyTimes="{kt(0, 0.6, 3.6, P)}" dur="{P}s" repeatCount="indefinite"/>'
+      f'<animate attributeName="opacity" values="0;1;1;0;0" keyTimes="{kt(0, 0.6, 3.4, 3.8, P)}" dur="{P}s" repeatCount="indefinite"/></rect>')
+    a(f'<rect x="240" y="300" width="700" height="2" fill="url(#sline)" opacity="0">'
+      f'<animate attributeName="y" values="300;300;500;500" keyTimes="{kt(0, 0.6, 3.6, P)}" dur="{P}s" repeatCount="indefinite"/>'
+      f'<animate attributeName="opacity" values="0;1;1;0;0" keyTimes="{kt(0, 0.6, 3.4, 3.8, P)}" dur="{P}s" repeatCount="indefinite"/></rect>')
+    a('</g></g>')
+
+    # ── the sentinel
+    # soft shadow on the "floor" shrinks as the drone rises
+    a(f'<ellipse cx="590" cy="292" rx="70" ry="7" fill="{t["a2"]}" opacity="0.18" filter="url(#sglow)">'
+      f'<animate attributeName="rx" values="70;56;70" dur="6s" repeatCount="indefinite" calcMode="spline" '
+      f'keySplines="0.45 0 0.55 1;0.45 0 0.55 1"/>'
+      f'<animate attributeName="opacity" values="0.18;0.1;0.18" dur="6s" repeatCount="indefinite" calcMode="spline" '
+      f'keySplines="0.45 0 0.55 1;0.45 0 0.55 1"/></ellipse>')
+
+    a('<g>' + hover)
+    cx, cy = EYE
+    # orbit ring, back half (behind the body)
+    a(f'<path d="M{cx - 150} {cy}A150 26 0 0 1 {cx + 150} {cy}" fill="none" stroke="url(#sedge)" stroke-opacity="0.3"/>')
+    # halo
+    a(f'<circle cx="{cx}" cy="{cy}" r="120" fill="url(#score)" opacity="0.25" filter="url(#sblur)">'
+      f'<animate attributeName="opacity" values="0.18;0.34;0.18" dur="4s" repeatCount="indefinite" calcMode="spline" '
+      f'keySplines="0.45 0 0.55 1;0.45 0 0.55 1"/></circle>')
+    # frosted body: blurred copy of the background, clipped to the silhouette
+    a(f'<g clip-path="url(#soct)"><use href="#sblobs" filter="url(#sfrost)"/>'
+      f'<path d="{sil}" fill="{t["panel"]}" fill-opacity="{0.35 if dark else 0.55}"/></g>')
+    # breathing core
+    a(f'<circle cx="{cx}" cy="{cy}" r="34" fill="url(#score)">'
+      f'<animate attributeName="r" values="26;38;26" dur="4s" repeatCount="indefinite" calcMode="spline" '
+      f'keySplines="0.45 0 0.55 1;0.45 0 0.55 1"/></circle>')
+    # facets — the front vertex drifts sideways, so the solid appears to turn slowly
+    fx = "560;622;560"
+
+    def facet(p1, p2, fill, stroke_op):
+        vals = ";".join(f"M{p1[0]} {p1[1]}L{p2[0]} {p2[1]}L{x} 160Z" for x in fx.split(";"))
+        a(f'<path d="M{p1[0]} {p1[1]}L{p2[0]} {p2[1]}L560 160Z" fill="url(#{fill})" stroke="{"#FFFFFF" if dark else t["a1"]}" '
+          f'stroke-opacity="{stroke_op}" stroke-width="0.8" stroke-linejoin="round">'
+          f'<animate attributeName="d" values="{vals}" dur="14s" repeatCount="indefinite" calcMode="spline" '
+          f'keySplines="0.45 0 0.55 1;0.45 0 0.55 1"/></path>')
+
+    edge_op = 0.28 if dark else 0.3
+    facet(T_, L_, "sf1", edge_op)
+    facet(R_, T_, "sf2", edge_op)
+    facet(L_, B_, "sf3", edge_op)
+    facet(B_, R_, "sf4", edge_op)
+    # eye: iris ring + pupil, over the glass
+    a(f'<circle cx="{cx}" cy="{cy}" r="15" fill="none" stroke="{t["a2"]}" stroke-width="1.4" opacity="0.9">'
+      f'<animate attributeName="r" values="13;17;13" dur="4s" repeatCount="indefinite" calcMode="spline" '
+      f'keySplines="0.45 0 0.55 1;0.45 0 0.55 1"/></circle>')
+    a(f'<circle cx="{cx}" cy="{cy}" r="6" fill="{"#E0FBFF" if dark else "#FFFFFF"}">'
+      f'<animate attributeName="opacity" values="0.8;1;0.8" dur="4s" repeatCount="indefinite"/></circle>')
+    a(f'<circle cx="{cx}" cy="{cy}" r="10" fill="{t["a2"]}" opacity="0.5" filter="url(#sglow)">'
+      f'<animate attributeName="opacity" values="0.35;0.8;0.35" dur="4s" repeatCount="indefinite"/></circle>')
+    # silhouette edge with travelling shimmer
+    a(f'<path d="{sil}" fill="none" stroke="url(#sedge)" stroke-width="1.4" stroke-linejoin="round" opacity="0.85"/>')
+    a(f'<path d="{sil}" fill="none" stroke="{"#FFFFFF" if dark else t["a2"]}" stroke-width="1.8" stroke-linejoin="round" '
+      f'pathLength="100" stroke-dasharray="12 88" opacity="0.85">'
+      f'<animate attributeName="stroke-dashoffset" values="100;0" dur="5s" repeatCount="indefinite"/></path>')
+    # specular glint along the upper-left facet
+    a(f'<path d="M{T_[0] - 6} {T_[1] + 16}L{L_[0] + 14} {L_[1] - 6}" stroke="#FFFFFF" stroke-width="2" '
+      f'stroke-linecap="round" opacity="0.15"><animate attributeName="opacity" values="0.1;0.55;0.1" dur="6s" '
+      f'repeatCount="indefinite"/></path>')
+    # emitter under the bottom vertex
+    a(f'<circle cx="{B_[0]}" cy="{B_[1] + 8}" r="3" fill="{t["a2"]}"/>')
+    a(f'<circle cx="{B_[0]}" cy="{B_[1] + 8}" r="3" fill="none" stroke="{t["a2"]}">'
+      f'<animate attributeName="r" values="3;14" dur="{P / 2}s" repeatCount="indefinite"/>'
+      f'<animate attributeName="opacity" values="0.8;0" dur="{P / 2}s" repeatCount="indefinite"/></circle>')
+    # orbit ring, front half + satellite
+    a(f'<path d="M{cx + 150} {cy}A150 26 0 0 1 {cx - 150} {cy}" fill="none" stroke="url(#sedge)" stroke-opacity="0.7"/>')
+    a(f'<circle r="3" fill="{t["a3"]}"><animateMotion dur="9s" repeatCount="indefinite" '
+      f'path="M{cx + 150} {cy}A150 26 0 1 1 {cx - 150} {cy}A150 26 0 1 1 {cx + 150} {cy}"/></circle>')
+    a('</g>')
+
+    # ── HUD labels
+    a(f'<text x="36" y="44" font-family="{MONO}" font-size="12" letter-spacing="2" fill="{t["muted"]}">SENTINEL-01</text>')
+    a(f'<text x="36" y="64" font-family="{MONO}" font-size="12" fill="{t["soft"]}"><tspan fill="{t["a3"]}">●</tspan> '
+      f'document.querySelectorAll(\'*\')</text>')
+    a(f'<text x="{SW - 36}" y="44" text-anchor="end" font-family="{MONO}" font-size="12" letter-spacing="2" '
+      f'fill="{t["muted"]}">DOM · INSPECT · EXTRACT</text>')
+    a(f'<text x="36" y="{SH - 28}" font-family="{MONO}" font-size="12" fill="{t["muted"]}">'
+      f'<tspan fill="{t["a2"]}">›</tspan> scraping · ws://automation-edge</text>')
+    a(f'<rect x="{36 + 33 * 12 * ADV + 6}" y="{SH - 39}" width="7" height="13" rx="1.5" fill="{t["a2"]}">{BLINK}</rect>')
+    a(f'<text x="{SW - 36}" y="{SH - 28}" text-anchor="end" font-family="{MONO}" font-size="12" fill="{t["muted"]}">'
+      f'{len(leaves) + len(parents) + 1} nodes / sweep</text>')
     a("</g>")
-    a(f'<rect x="0.5" y="0.5" width="{PW - 1}" height="{PH - 1}" rx="23.5" fill="none" stroke="{t["hair"]}"/>')
-    a(f'<rect x="0.5" y="0.5" width="{PW - 1}" height="{PH - 1}" rx="23.5" fill="none" stroke="url(#paccent)" '
-      f'stroke-width="1.4" pathLength="1000" stroke-dasharray="180 320" opacity="0.6">'
+
+    a(f'<rect x="0.5" y="0.5" width="{SW - 1}" height="{SH - 1}" rx="23.5" fill="none" stroke="{t["hair"]}"/>')
+    a(f'<rect x="0.5" y="0.5" width="{SW - 1}" height="{SH - 1}" rx="23.5" fill="none" stroke="url(#saccent)" '
+      f'stroke-width="1.4" pathLength="1000" stroke-dasharray="200 300" opacity="0.6">'
       f'<animate attributeName="stroke-dashoffset" values="0;-1000" dur="14s" repeatCount="indefinite"/></rect>')
     a("</svg>")
     return "\n".join(o) + "\n"
@@ -662,9 +792,10 @@ def main():
         with open(path, "w", encoding="utf-8") as fh:
             fh.write(build(name, theme, rows))
         print(f"wrote {os.path.normpath(path)} ({os.path.getsize(path) // 1024} KB)")
-        path = os.path.join(args.out, f"pipeline-{name}.svg")
+        # dark is the canonical data_sentinel.svg; light gets a suffix for the README <picture> swap
+        path = os.path.join(args.out, "data_sentinel.svg" if name == "dark" else "data_sentinel-light.svg")
         with open(path, "w", encoding="utf-8") as fh:
-            fh.write(build_pipeline(name, theme))
+            fh.write(build_sentinel(name, theme))
         print(f"wrote {os.path.normpath(path)} ({os.path.getsize(path) // 1024} KB)")
 
 

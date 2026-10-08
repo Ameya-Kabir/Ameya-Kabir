@@ -32,6 +32,16 @@ I build **automation that holds up in production**: enterprise web automation, A
 
 <br>
 
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./data_sentinel.svg">
+    <source media="(prefers-color-scheme: light)" srcset="./data_sentinel-light.svg">
+    <img alt="Data Sentinel — a glass drone sweeping a scan beam over a DOM tree, extracting nodes" src="./data_sentinel.svg" width="100%">
+  </picture>
+</p>
+
+<br>
+
 ## `> stack`
 
 <div align="center">
@@ -54,16 +64,6 @@ I build **automation that holds up in production**: enterprise web automation, A
 | 🛰️ **Enterprise IT Alerting System** | Always-on watchdog that monitors services and scheduled jobs, raises incidents the moment something fails, and walks them up a **multi-level escalation chain** until someone acknowledges. | Watchdog loop · escalation tiers with timeouts · incident state persisted for audit & reporting | `Java` `Python` `PostgreSQL` `AutomationEdge` |
 | 🗼 **The Tower — BlueStacks HUD Overlay** | Automation overlay for *The Tower* running in BlueStacks: a heads-up display layered over the emulator that reads game state and drives repetitive actions hands-free. | Transparent always-on-top HUD · screen-state detection · scripted input to the emulator | `Python` `BlueStacks` |
 | 💸 **Personal Expense Tracker** | Full-stack tracker for logging spending, categorising transactions and seeing where the money actually goes month over month. | Normalised PostgreSQL schema · REST API · aggregate queries powering the dashboard | `PostgreSQL` `Node.js` `Express` `JavaScript` |
-
-<br>
-
-## `> how I build`
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./pipeline-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="./pipeline-light.svg">
-  <img alt="Pipeline: trigger → bot → integrate → persist → watchdog, with multi-level escalation on failure" src="./pipeline-dark.svg" width="100%">
-</picture>
 
 <br>
 
