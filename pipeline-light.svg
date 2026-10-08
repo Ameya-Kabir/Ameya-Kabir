@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="330" viewBox="0 0 1180 330" role="img" aria-labelledby="ptitle pdesc">
+<title id="ptitle">How my automations run</title>
+<desc id="pdesc">Pipeline: trigger, bot, API integration, PostgreSQL, watchdog — failures escalate from detection through L1, L2 and L3 until resolved.</desc>
+<defs>
+<clipPath id="pcard"><rect width="1180" height="330" rx="24"/></clipPath>
+<linearGradient id="paccent" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="600" y2="0" spreadMethod="reflect"><stop offset="0" stop-color="#2563EB"/><stop offset="0.5" stop-color="#06B6D4"/><stop offset="1" stop-color="#10B981"/><animateTransform attributeName="gradientTransform" type="translate" values="0 0;600 0;0 0" dur="9s" repeatCount="indefinite"/></linearGradient>
+<linearGradient id="psheen" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0.55"/><stop offset="0.5" stop-color="#FFFFFF" stop-opacity="0"/></linearGradient>
+<radialGradient id="pblob0"><stop offset="0" stop-color="#2563EB" stop-opacity="0.16000000000000003"/><stop offset="1" stop-color="#2563EB" stop-opacity="0"/></radialGradient>
+<radialGradient id="pblob1"><stop offset="0" stop-color="#06B6D4" stop-opacity="0.16000000000000003"/><stop offset="1" stop-color="#06B6D4" stop-opacity="0"/></radialGradient>
+<radialGradient id="pblob2"><stop offset="0" stop-color="#10B981" stop-opacity="0.16000000000000003"/><stop offset="1" stop-color="#10B981" stop-opacity="0"/></radialGradient>
+<pattern id="pgrid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="rgba(15,23,42,0.05)"/></pattern>
+<filter id="pglow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4"/></filter>
+</defs>
+<g clip-path="url(#pcard)">
+<rect width="1180" height="330" fill="#FFFFFF"/>
+<circle cx="180" cy="60" r="300" fill="url(#pblob0)"><animate attributeName="cx" values="180;300;180" dur="20s" repeatCount="indefinite"/></circle>
+<circle cx="620" cy="300" r="320" fill="url(#pblob1)"><animate attributeName="cx" values="620;480;620" dur="24s" repeatCount="indefinite"/></circle>
+<circle cx="1040" cy="80" r="300" fill="url(#pblob2)"><animate attributeName="cx" values="1040;940;1040" dur="22s" repeatCount="indefinite"/></circle>
+<rect width="1180" height="330" fill="url(#pgrid)"/>
+<text x="40" y="46" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono','DejaVu Sans Mono',monospace" font-size="14" fill="#10B981">➜ <tspan fill="#06B6D4">~/pipeline</tspan><tspan fill="#475569">  how my automations run, end to end</tspan></text>
+<circle cx="1040" cy="41" r="3.5" fill="#10B981"><animate attributeName="opacity" values="1;0.3;1" dur="1.8s" repeatCount="indefinite"/></circle>
+<text x="1140" y="46" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono','DejaVu Sans Mono',monospace" font-size="12" fill="#64748B">running 24/7</text>
+<line x1="228" y1="133.0" x2="268" y2="133.0" stroke="rgba(15,23,42,0.09)" stroke-width="2"/>
+<line x1="228" y1="133.0" x2="268" y2="133.0" stroke="url(#paccent)" stroke-width="2" stroke-dasharray="4 6" opacity="0.7"><animate attributeName="stroke-dashoffset" values="20;0" dur="0.8s" repeatCount="indefinite"/></line>
+<circle cx="0" cy="0" r="6" fill="#06B6D4" opacity="0" filter="url(#pglow)"><animateMotion path="M228 133.0H268" keyPoints="0;0;1;1" keyTimes="0.0000;0.0550;0.2000;1.0000" calcMode="linear" dur="10.0s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0.0000;0.0550;0.0600;0.1950;0.2000;1.0000" dur="10.0s" repeatCount="indefinite"/></circle>
+<circle cx="0" cy="0" r="3.5" fill="#0F172A" opacity="0"><animateMotion path="M228 133.0H268" keyPoints="0;0;1;1" keyTimes="0.0000;0.0550;0.2000;1.0000" calcMode="linear" dur="10.0s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0.0000;0.0550;0.0600;0.1950;0.2000;1.0000" dur="10.0s" repeatCount="indefinite"/></circle>
+<line x1="456" y1="133.0" x2="496" y2="133.0" stroke="rgba(15,23,42,0.09)" stroke-width="2"/>
+<line x1="456" y1="133.0" x2="496" y2="133.0" stroke="url(#paccent)" stroke-width="2" stroke-dasharray="4 6" opacity="0.7"><animate attributeName="stroke-dashoffset" values="20;0" dur="0.8s" repeatCount="indefinite"/></line>
+<circle cx="0" cy="0" r="6" fill="#06B6D4" opacity="0" filter="url(#pglow)"><animateMotion path="M456 133.0H496" keyPoints="0;0;1;1" keyTimes="0.0000;0.2150;0.3000;1.0000" calcMode="linear" dur="10.0s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0.0000;0.2150;0.2200;0.2950;0.3000;1.0000" dur="10.0s" repeatCount="indefinite"/></circle>
+<circle cx="0" cy="0" r="3.5" fill="#0F172A" opacity="0"><animateMotion path="M456 133.0H496" keyPoints="0;0;1;1" keyTimes="0.0000;0.2150;0.3000;1.0000" calcMode="linear" dur="10.0s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0.0000;0.2150;0.2200;0.2950;0.3000;1.0000" dur="10.0s" repeatCount="indefinite"/></circle>
+<line x1="684" y1="133.0" x2="724" y2="133.0" stroke="rgba(15,23,42,0.09)" stroke-width="2"/>
+<line x1="684" y1="133.0" x2="724" y2="133.0" stroke="url(#paccent)" stroke-width="2" stroke-dasharray="4 6" opacity="0.7"><animate attributeName="stroke-dashoffset" values="20;0" dur="0.8s" repeatCount="indefinite"/></line>
+<circle cx="0" cy="0" r="6" fill="#06B6D4" opacity="0" filter="url(#pglow)"><animateMotion path="M684 133.0H724" keyPoints="0;0;1;1" keyTimes="0.0000;0.3150;0.4000;1.0000" calcMode="linear" dur="10.0s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0.0000;0.3150;0.3200;0.3950;0.4000;1.0000" dur="10.0s" repeatCount="indefinite"/></circle>
+<circle cx="0" cy="0" r="3.5" fill="#0F172A" opacity="0"><animateMotion path="M684 133.0H724" keyPoints="0;0;1;1" keyTimes="0.0000;0.3150;0.4000;1.0000" calcMode="linear" dur="10.0s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0.0000;0.3150;0.3200;0.3950;0.4000;1.0000" dur="10.0s" repeatCount="indefinite"/></circle>
+<line x1="912" y1="133.0" x2="952" y2="133.0" stroke="rgba(15,23,42,0.09)" stroke-width="2"/>
+<line x1="912" y1="133.0" x2="952" y2="133.0" stroke="url(#paccent)" stroke-width="2" stroke-dasharray="4 6" opacity="0.7"><animate attributeName="stroke-dashoffset" values="20;0" dur="0.8s" repeatCount="indefinite"/></line>
+<circle cx="0" cy="0" r="6" fill="#06B6D4" opacity="0" filter="url(#pglow)"><animateMotion path="M912 133.0H952" keyPoints="0;0;1;1" keyTimes="0.0000;0.4150;0.5000;1.0000" calcMode="linear" dur="10.0s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0.0000;0.4150;0.4200;0.4950;0.5000;1.0000" dur="10.0s" repeatCount="indefinite"/></circle>
+<circle cx="0" cy="0" r="3.5" fill="#0F172A" opacity="0"><animateMotion path="M912 133.0H952" keyPoints="0;0;1;1" keyTimes="0.0000;0.4150;0.5000;1.0000" calcMode="linear" dur="10.0s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0.0000;0.4150;0.4200;0.4950;0.5000;1.0000" dur="10.0s" repeatCount="indefinite"/></circle>
+<rect x="40" y="74" width="188" height="118" rx="16" fill="#F8FAFC" fill-opacity="0.78"/>
+<rect x="40" y="74" width="188" height="118" rx="16" fill="url(#psheen)"/>
+<rect x="40.5" y="74.5" width="187" height="117" rx="15.5" fill="none" stroke="rgba(15,23,42,0.09)"/>
+<rect x="40.5" y="74.5" width="187" height="117" rx="15.5" fill="none" stroke="url(#paccent)" stroke-width="1.6" opacity="0.15"><animate attributeName="opacity" values="0.15;0.15;1;0.15;0.15" keyTimes="0.0000;0.0100;0.0400;0.1300;1.0000" dur="10.0s" repeatCount="indefinite"/></rect>
+<text x="58" y="102" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono','DejaVu Sans Mono',monospace" font-size="11" fill="#64748B">01</text>
+<circle cx="206" cy="98" r="4" fill="#2563EB"><animate attributeName="r" values="4;4;6.5;4;4" keyTimes="0.0000;0.0200;0.0400;0.0800;1.0000" dur="10.0s" repeatCount="indefinite"/></circle>
+<text x="58" y="132" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono','DejaVu Sans Mono',monospace" font-size="15" font-weight="700" letter-spacing="1.5" fill="#0F172A">TRIGGER</text>
+<text x="58" y="156" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono','DejaVu Sans Mono',monospace" font-size="12" fill="#475569">cron · webhook</text>
+<text x="58" y="174" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono','DejaVu Sans Mono',monospace" font-size="12" fill="#64748B">inbox · file drop</text>
+<rect x="268" y="74" width="188" height="118" rx="16" fill="#F8FAFC" fill-opacity="0.78"/>
+<rect x="268" y="74" width="188" height="118" rx="16" fill="url(#psheen)"/>
+<rect x="268.5" y="74.5" width="187" height="117" rx="15.5" fill="none" stroke="rgba(15,23,42,0.09)"/>
+<rect x="268.5" y="74.5" width="187" height="117" rx="15.5" fill="none" stroke="url(#paccent)" stroke-width="1.6" opacity="0.15"><animate attributeName="opacity" values="0.15;0.15;1;0.15;0.15" keyTimes="0.0000;0.1700;0.2000;0.2900;1.0000" dur="10.0s" repeatCount="indefinite"/></rect>
+<text x="286" y="102" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono','DejaVu Sans Mono',monospace" font-size="11" fill="#64748B">02</text>
+<circle cx="434" cy="98" r="4" fill="#06B6D4"><animate attributeName="r" values="4;4;6.5;4;4" keyTimes="0.0000;0.1800;0.2000;0.2400;1.0000" dur="10.0s" repeatCount="indefinite"/></circle>
+<text x="286" y="132" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono','DejaVu Sans Mono',monospace" font-size="15" font-weight="700" letter-spacing="1.5" fill="#0F172A">BOT</text>
+<text x="286" y="156" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono','DejaVu Sans Mono',monospace" font-size="12" fill="#475569">AutomationEdge</text>
+<text x="286" y="174" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono','DejaVu Sans Mono',monospace" font-size="12" fill="#64748B">Selenium · DOM</text>
+<rect x="496" y="74" width="188" height="118" rx="16" fill="#F8FAFC" fill-opacity="0.78"/>
+<rect x="496" y="74" width="188" height="118" rx="16" fill="url(#psheen)"/>
+<rect x="496.5" y="74.5" width="187" height="117" rx="15.5" fill="none" stroke="rgba(15,23,42,0.09)"/>
+<rect x="496.5" y="74.5" width="187" height="117" rx="15.5" fill="none" stroke="url(#paccent)" stroke-width="1.6" opacity="0.15"><animate attributeName="opacity" values="0.15;0.15;1;0.15;0.15" keyTimes="0.0000;0.2700;0.3000;0.3900;1.0000" dur="10.0s" repeatCount="indefinite"/></rect>
+<text x="514" y="102" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono','DejaVu Sans Mono',monospace" font-size="11" fill="#64748B">03</text>
+<circle cx="662" cy="98" r="4" fill="#10B981"><animate attributeName="r" values="4;4;6.5;4;4" keyTimes="0.0000;0.2800;0.3000;0.3400;1.0000" dur="10.0s" repeatCount="indefinite"/></circle>
+<text x="514" y="132" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono','DejaVu Sans Mono',monospace" font-size="15" font-weight="700" letter-spacing="1.5" fill="#0F172A">INTEGRATE</text>
+<text x="514" y="156" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono','DejaVu Sans Mono',monospace" font-size="12" fill="#475569">REST APIs · JSON</text>
+<text x="514" y="174" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono','DejaVu Sans Mono',monospace" font-size="12" fill="#64748B">auth · retries</text>
+<rect x="724" y="74" width="188" height="118" rx="16" fill="#F8FAFC" fill-opacity="0.78"/>
+<rect x="724" y="74" width="188" height="118" rx="16" fill="url(#psheen)"/>
+<rect x="724.5" y="74.5" width="187" height="117" rx="15.5" fill="none" stroke="rgba(15,23,42,0.09)"/>
+<rect x="724.5" y="74.5" width="187" height="117" rx="15.5" fill="none" stroke="url(#paccent)" stroke-width="1.6" opacity="0.15"><animate attributeName="opacity" values="0.15;0.15;1;0.15;0.15" keyTimes="0.0000;0.3700;0.4000;0.4900;1.0000" dur="10.0s" repeatCount="indefinite"/></rect>
+<text x="742" y="102" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono','DejaVu Sans Mono',monospace" font-size="11" fill="#64748B">04</text>
+<circle cx="890" cy="98" r="4" fill="#2563EB"><animate attributeName="r" values="4;4;6.5;4;4" keyTimes="0.0000;0.3800;0.4000;0.4400;1.0000" dur="10.0s" repeatCount="indefinite"/></circle>
+<text x="742" y="132" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono','DejaVu Sans Mono',monospace" font-size="15" font-weight="700" letter-spacing="1.5" fill="#0F172A">PERSIST</text>
+<text x="742" y="156" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono','DejaVu Sans Mono',monospace" font-size="12" fill="#475569">PostgreSQL</text>
+<text x="742" y="174" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono','DejaVu Sans Mono',monospace" font-size="12" fill="#64748B">audit trail</text>
+<rect x="952" y="74" width="188" height="118" rx="16" fill="#F8FAFC" fill-opacity="0.78"/>
+<rect x="952" y="74" width="188" height="118" rx="16" fill="url(#psheen)"/>
+<rect x="952.5" y="74.5" width="187" height="117" rx="15.5" fill="none" stroke="rgba(15,23,42,0.09)"/>
+<rect x="952.5" y="74.5" width="187" height="117" rx="15.5" fill="none" stroke="url(#paccent)" stroke-width="1.6" opacity="0.15"><animate attributeName="opacity" values="0.15;0.15;1;0.15;0.15" keyTimes="0.0000;0.4700;0.5000;0.5900;1.0000" dur="10.0s" repeatCount="indefinite"/></rect>
+<text x="970" y="102" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono','DejaVu Sans Mono',monospace" font-size="11" fill="#64748B">05</text>
+<circle cx="1118" cy="98" r="4" fill="#06B6D4"><animate attributeName="r" values="4;4;6.5;4;4" keyTimes="0.0000;0.4800;0.5000;0.5400;1.0000" dur="10.0s" repeatCount="indefinite"/></circle>
+<text x="970" y="132" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono','DejaVu Sans Mono',monospace" font-size="15" font-weight="700" letter-spacing="1.5" fill="#0F172A">WATCHDOG</text>
+<text x="970" y="156" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono','DejaVu Sans Mono',monospace" font-size="12" fill="#475569">health checks</text>
+<text x="970" y="174" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono','DejaVu Sans Mono',monospace" font-size="12" fill="#64748B">SLA timers</text>
+<text x="40" y="257" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono','DejaVu Sans Mono',monospace" font-size="12" letter-spacing="1.5" fill="#64748B">ON FAILURE ›</text>
+<line x1="248.0" y1="252" x2="1062.0" y2="252" stroke="rgba(15,23,42,0.09)" stroke-width="2"/>
+<line x1="248.0" y1="252" x2="248.0" y2="252" stroke="url(#paccent)" stroke-width="2"><animate attributeName="x2" values="248;248;248;451.5;655;858.5;1062;1062;248;248" keyTimes="0.0000;0.4000;0.4400;0.5250;0.6100;0.6950;0.7800;0.9400;0.9410;1" dur="10.0s" repeatCount="indefinite"/></line>
+<rect x="170" y="235" width="156" height="34" rx="17" fill="#FFFFFF" stroke="rgba(15,23,42,0.09)"/>
+<g opacity="0.0"><animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0.0000;0.4250;0.4400;0.9400;0.9700;1.0000" dur="10.0s" repeatCount="indefinite"/><rect x="170" y="235" width="156" height="34" rx="17" fill="#06B6D4" filter="url(#pglow)" opacity="0.3"/><rect x="170" y="235" width="156" height="34" rx="17" fill="#FFFFFF" stroke="#06B6D4" stroke-width="1.4"/></g>
+<circle cx="188" cy="252" r="3.5" fill="#06B6D4"/>
+<text x="200" y="256.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono','DejaVu Sans Mono',monospace" font-size="12.5" fill="#0F172A">detect</text>
+<rect x="373.5" y="235" width="156" height="34" rx="17" fill="#FFFFFF" stroke="rgba(15,23,42,0.09)"/>
+<g opacity="0.0"><animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0.0000;0.5100;0.5250;0.9400;0.9700;1.0000" dur="10.0s" repeatCount="indefinite"/><rect x="373.5" y="235" width="156" height="34" rx="17" fill="#2563EB" filter="url(#pglow)" opacity="0.3"/><rect x="373.5" y="235" width="156" height="34" rx="17" fill="#FFFFFF" stroke="#2563EB" stroke-width="1.4"/></g>
+<circle cx="391.5" cy="252" r="3.5" fill="#2563EB"/>
+<text x="403.5" y="256.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono','DejaVu Sans Mono',monospace" font-size="12.5" fill="#0F172A">L1 · on-call</text>
+<rect x="577" y="235" width="156" height="34" rx="17" fill="#FFFFFF" stroke="rgba(15,23,42,0.09)"/>
+<g opacity="0.0"><animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0.0000;0.5950;0.6100;0.9400;0.9700;1.0000" dur="10.0s" repeatCount="indefinite"/><rect x="577" y="235" width="156" height="34" rx="17" fill="#2563EB" filter="url(#pglow)" opacity="0.3"/><rect x="577" y="235" width="156" height="34" rx="17" fill="#FFFFFF" stroke="#2563EB" stroke-width="1.4"/></g>
+<circle cx="595" cy="252" r="3.5" fill="#2563EB"/>
+<text x="607" y="256.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono','DejaVu Sans Mono',monospace" font-size="12.5" fill="#0F172A">L2 · team lead</text>
+<rect x="780.5" y="235" width="156" height="34" rx="17" fill="#FFFFFF" stroke="rgba(15,23,42,0.09)"/>
+<g opacity="0.0"><animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0.0000;0.6800;0.6950;0.9400;0.9700;1.0000" dur="10.0s" repeatCount="indefinite"/><rect x="780.5" y="235" width="156" height="34" rx="17" fill="#2563EB" filter="url(#pglow)" opacity="0.3"/><rect x="780.5" y="235" width="156" height="34" rx="17" fill="#FFFFFF" stroke="#2563EB" stroke-width="1.4"/></g>
+<circle cx="798.5" cy="252" r="3.5" fill="#2563EB"/>
+<text x="810.5" y="256.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono','DejaVu Sans Mono',monospace" font-size="12.5" fill="#0F172A">L3 · management</text>
+<rect x="984" y="235" width="156" height="34" rx="17" fill="#FFFFFF" stroke="rgba(15,23,42,0.09)"/>
+<g opacity="0.0"><animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0.0000;0.7650;0.7800;0.9400;0.9700;1.0000" dur="10.0s" repeatCount="indefinite"/><rect x="984" y="235" width="156" height="34" rx="17" fill="#10B981" filter="url(#pglow)" opacity="0.3"/><rect x="984" y="235" width="156" height="34" rx="17" fill="#FFFFFF" stroke="#10B981" stroke-width="1.4"/></g>
+<circle cx="1002" cy="252" r="3.5" fill="#10B981"/>
+<text x="1014" y="256.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono','DejaVu Sans Mono',monospace" font-size="12.5" fill="#0F172A">resolved ✓</text>
+<text x="40" y="308" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono','DejaVu Sans Mono',monospace" font-size="11.5" fill="#64748B">each tier gets a window to acknowledge before the next one is paged</text>
+</g>
+<rect x="0.5" y="0.5" width="1179" height="329" rx="23.5" fill="none" stroke="rgba(15,23,42,0.09)"/>
+<rect x="0.5" y="0.5" width="1179" height="329" rx="23.5" fill="none" stroke="url(#paccent)" stroke-width="1.4" pathLength="1000" stroke-dasharray="180 320" opacity="0.6"><animate attributeName="stroke-dashoffset" values="0;-1000" dur="14s" repeatCount="indefinite"/></rect>
+</svg>

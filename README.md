@@ -57,30 +57,13 @@ I build **automation that holds up in production**: enterprise web automation, A
 
 <br>
 
-## `> stats`
-
-<div align="center">
+## `> how I build`
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats.vercel.app/api?username=ameya-kabir&show_icons=true&include_all_commits=true&count_private=true&hide_border=false&border_radius=16&bg_color=0F172A&border_color=1E293B&title_color=22D3EE&icon_color=7C3AED&text_color=CBD5E1&ring_color=10B981">
-  <img height="170" alt="GitHub stats" src="https://github-readme-stats.vercel.app/api?username=ameya-kabir&show_icons=true&include_all_commits=true&count_private=true&hide_border=false&border_radius=16&bg_color=F8FAFC&border_color=E2E8F0&title_color=2563EB&icon_color=06B6D4&text_color=334155&ring_color=10B981">
+  <source media="(prefers-color-scheme: dark)" srcset="./pipeline-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="./pipeline-light.svg">
+  <img alt="Pipeline: trigger → bot → integrate → persist → watchdog, with multi-level escalation on failure" src="./pipeline-dark.svg" width="100%">
 </picture>
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats.vercel.app/api/top-langs/?username=ameya-kabir&layout=compact&langs_count=8&hide_border=false&border_radius=16&bg_color=0F172A&border_color=1E293B&title_color=22D3EE&text_color=CBD5E1">
-  <img height="170" alt="Top languages" src="https://github-readme-stats.vercel.app/api/top-langs/?username=ameya-kabir&layout=compact&langs_count=8&hide_border=false&border_radius=16&bg_color=F8FAFC&border_color=E2E8F0&title_color=2563EB&text_color=334155">
-</picture>
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://streak-stats.demolab.com?user=ameya-kabir&background=0F172A&border=1E293B&border_radius=16&stroke=1E293B&ring=7C3AED&fire=22D3EE&currStreakNum=E2E8F0&sideNums=E2E8F0&currStreakLabel=22D3EE&sideLabels=94A3B8&dates=64748B">
-  <img width="100%" alt="GitHub streak" src="https://streak-stats.demolab.com?user=ameya-kabir&background=F8FAFC&border=E2E8F0&border_radius=16&stroke=E2E8F0&ring=2563EB&fire=06B6D4&currStreakNum=0F172A&sideNums=0F172A&currStreakLabel=2563EB&sideLabels=475569&dates=64748B">
-</picture>
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-activity-graph.vercel.app/graph?username=ameya-kabir&bg_color=0F172A&color=94A3B8&title_color=22D3EE&line=22D3EE&point=7C3AED&area=true&area_color=7C3AED&hide_border=false&border_color=1E293B&radius=16&custom_title=Commit%20activity">
-  <img width="100%" alt="Commit activity graph" src="https://github-readme-activity-graph.vercel.app/graph?username=ameya-kabir&bg_color=F8FAFC&color=475569&title_color=2563EB&line=06B6D4&point=2563EB&area=true&area_color=06B6D4&hide_border=false&border_color=E2E8F0&radius=16&custom_title=Commit%20activity">
-</picture>
-
-</div>
 
 <br>
 

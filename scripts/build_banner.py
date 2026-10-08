@@ -510,6 +510,147 @@ def build(name, t, ascii_rows):
     return "\n".join(o) + "\n"
 
 
+PW, PH = 1180, 330
+STAGES = [
+    ("TRIGGER", "cron · webhook", "inbox · file drop"),
+    ("BOT", "AutomationEdge", "Selenium · DOM"),
+    ("INTEGRATE", "REST APIs · JSON", "auth · retries"),
+    ("PERSIST", "PostgreSQL", "audit trail"),
+    ("WATCHDOG", "health checks", "SLA timers"),
+]
+ESCALATION = ["detect", "L1 · on-call", "L2 · team lead", "L3 · management", "resolved ✓"]
+
+
+def build_pipeline(name, t):
+    """Animated 'how my automations run' diagram: data flows through five stages, then escalates."""
+    T = 10.0
+    o = []
+    a = o.append
+
+    def kt(*ts):
+        return ";".join(f"{x / T:.4f}" for x in ts)
+
+    a(f'<svg xmlns="http://www.w3.org/2000/svg" width="{PW}" height="{PH}" viewBox="0 0 {PW} {PH}" '
+      f'role="img" aria-labelledby="ptitle pdesc">')
+    a('<title id="ptitle">How my automations run</title>')
+    a('<desc id="pdesc">Pipeline: trigger, bot, API integration, PostgreSQL, watchdog — failures escalate '
+      'from detection through L1, L2 and L3 until resolved.</desc>')
+    a("<defs>")
+    a(f'<clipPath id="pcard"><rect width="{PW}" height="{PH}" rx="24"/></clipPath>')
+    a(f'<linearGradient id="paccent" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="600" y2="0" spreadMethod="reflect">'
+      f'<stop offset="0" stop-color="{t["a1"]}"/><stop offset="0.5" stop-color="{t["a2"]}"/>'
+      f'<stop offset="1" stop-color="{t["a3"]}"/>'
+      f'<animateTransform attributeName="gradientTransform" type="translate" values="0 0;600 0;0 0" '
+      f'dur="9s" repeatCount="indefinite"/></linearGradient>')
+    a(f'<linearGradient id="psheen" x1="0" y1="0" x2="0" y2="1">'
+      f'<stop offset="0" stop-color="#FFFFFF" stop-opacity="{t["sheen"]}"/>'
+      f'<stop offset="0.5" stop-color="#FFFFFF" stop-opacity="0"/></linearGradient>')
+    for i, col in enumerate((t["a1"], t["a2"], t["a3"])):
+        a(f'<radialGradient id="pblob{i}"><stop offset="0" stop-color="{col}" stop-opacity="{t["blob"] * 0.8}"/>'
+          f'<stop offset="1" stop-color="{col}" stop-opacity="0"/></radialGradient>')
+    a(f'<pattern id="pgrid" width="32" height="32" patternUnits="userSpaceOnUse">'
+      f'<path d="M32 0H0V32" fill="none" stroke="{t["grid"]}"/></pattern>')
+    a('<filter id="pglow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4"/></filter>')
+    a("</defs>")
+
+    a('<g clip-path="url(#pcard)">')
+    a(f'<rect width="{PW}" height="{PH}" fill="{t["bg"]}"/>')
+    for i, (cx, cy, r, dx, dur) in enumerate(((180, 60, 300, 120, 20), (620, 300, 320, -140, 24), (1040, 80, 300, -100, 22))):
+        a(f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="url(#pblob{i})">'
+          f'<animate attributeName="cx" values="{cx};{cx + dx};{cx}" dur="{dur}s" repeatCount="indefinite"/></circle>')
+    a(f'<rect width="{PW}" height="{PH}" fill="url(#pgrid)"/>')
+
+    # header
+    a(f'<text x="40" y="46" font-family="{MONO}" font-size="14" fill="{t["a3"]}">➜ <tspan fill="{t["a2"]}">~/pipeline</tspan>'
+      f'<tspan fill="{t["soft"]}">  how my automations run, end to end</tspan></text>')
+    a(f'<circle cx="{PW - 140}" cy="41" r="3.5" fill="{t["a3"]}">'
+      f'<animate attributeName="opacity" values="1;0.3;1" dur="1.8s" repeatCount="indefinite"/></circle>')
+    a(f'<text x="{PW - 40}" y="46" text-anchor="end" font-family="{MONO}" font-size="12" fill="{t["muted"]}">'
+      f'running 24/7</text>')
+
+    # stages
+    nw, nh, ny, gap = 188, 118, 74, 40
+    xs = [40 + i * (nw + gap) for i in range(len(STAGES))]
+    cy = ny + nh / 2
+    arrive = [0.4] + [1.0 + i * 1.0 for i in range(1, len(STAGES))]
+
+    # connectors + packets
+    for i in range(len(STAGES) - 1):
+        x1, x2 = xs[i] + nw, xs[i + 1]
+        a(f'<line x1="{x1}" y1="{cy}" x2="{x2}" y2="{cy}" stroke="{t["hair"]}" stroke-width="2"/>')
+        a(f'<line x1="{x1}" y1="{cy}" x2="{x2}" y2="{cy}" stroke="url(#paccent)" stroke-width="2" '
+          f'stroke-dasharray="4 6" opacity="0.7"><animate attributeName="stroke-dashoffset" values="20;0" '
+          f'dur="0.8s" repeatCount="indefinite"/></line>')
+        s, e = arrive[i] + 0.15, arrive[i + 1]
+        for glow in (True, False):
+            a(f'<circle cx="0" cy="0" r="{6 if glow else 3.5}" fill="{t["a2"] if glow else t["text"]}" opacity="0"'
+              f'{" filter=" + chr(34) + "url(#pglow)" + chr(34) if glow else ""}>'
+              f'<animateMotion path="M{x1} {cy}H{x2}" keyPoints="0;0;1;1" keyTimes="{kt(0, s, e, T)}" '
+              f'calcMode="linear" dur="{T}s" repeatCount="indefinite"/>'
+              f'<animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="{kt(0, s, s + 0.05, e - 0.05, e, T)}" '
+              f'dur="{T}s" repeatCount="indefinite"/></circle>')
+
+    for i, (title, l1, l2) in enumerate(STAGES):
+        x = xs[i]
+        col = (t["a1"], t["a2"], t["a3"], t["a1"], t["a2"])[i]
+        a(f'<rect x="{x}" y="{ny}" width="{nw}" height="{nh}" rx="16" fill="{t["panel"]}" fill-opacity="{t["panel_alpha"]}"/>')
+        a(f'<rect x="{x}" y="{ny}" width="{nw}" height="{nh}" rx="16" fill="url(#psheen)"/>')
+        a(f'<rect x="{x + 0.5}" y="{ny + 0.5}" width="{nw - 1}" height="{nh - 1}" rx="15.5" fill="none" stroke="{t["hair"]}"/>')
+        # pulse when the packet arrives
+        p = arrive[i]
+        a(f'<rect x="{x + 0.5}" y="{ny + 0.5}" width="{nw - 1}" height="{nh - 1}" rx="15.5" fill="none" '
+          f'stroke="url(#paccent)" stroke-width="1.6" opacity="0.15">'
+          f'<animate attributeName="opacity" values="0.15;0.15;1;0.15;0.15" '
+          f'keyTimes="{kt(0, p - 0.3, p, p + 0.9, T)}" dur="{T}s" repeatCount="indefinite"/></rect>')
+        a(f'<text x="{x + 18}" y="{ny + 28}" font-family="{MONO}" font-size="11" fill="{t["muted"]}">0{i + 1}</text>')
+        a(f'<circle cx="{x + nw - 22}" cy="{ny + 24}" r="4" fill="{col}">'
+          f'<animate attributeName="r" values="4;4;6.5;4;4" keyTimes="{kt(0, p - 0.2, p, p + 0.4, T)}" '
+          f'dur="{T}s" repeatCount="indefinite"/></circle>')
+        a(f'<text x="{x + 18}" y="{ny + 58}" font-family="{MONO}" font-size="15" font-weight="700" '
+          f'letter-spacing="1.5" fill="{t["text"]}">{title}</text>')
+        a(f'<text x="{x + 18}" y="{ny + 82}" font-family="{MONO}" font-size="12" fill="{t["soft"]}">{esc(l1)}</text>')
+        a(f'<text x="{x + 18}" y="{ny + 100}" font-family="{MONO}" font-size="12" fill="{t["muted"]}">{esc(l2)}</text>')
+
+    # escalation lane
+    ly = 252
+    a(f'<text x="40" y="{ly + 5}" font-family="{MONO}" font-size="12" letter-spacing="1.5" fill="{t["muted"]}">'
+      f'ON FAILURE ›</text>')
+    lx0, lx1 = 170, PW - 40
+    n = len(ESCALATION)
+    cw = 156
+    step = (lx1 - lx0 - cw) / (n - 1)
+    chip_x = [lx0 + k * step for k in range(n)]
+    lit = [4.4 + k * 0.85 for k in range(n)]
+    reset = 9.4
+    a(f'<line x1="{lx0 + cw / 2}" y1="{ly}" x2="{chip_x[-1] + cw / 2}" y2="{ly}" stroke="{t["hair"]}" stroke-width="2"/>')
+    xs_prog = ";".join(f(v) for v in [lx0 + cw / 2, lx0 + cw / 2] + [c + cw / 2 for c in chip_x] + [chip_x[-1] + cw / 2, lx0 + cw / 2, lx0 + cw / 2])
+    a(f'<line x1="{lx0 + cw / 2}" y1="{ly}" x2="{lx0 + cw / 2}" y2="{ly}" stroke="url(#paccent)" stroke-width="2">'
+      f'<animate attributeName="x2" values="{xs_prog}" keyTimes="{kt(0, lit[0] - 0.4, *lit, reset, reset + 0.01)};1" '
+      f'dur="{T}s" repeatCount="indefinite"/></line>')
+    for k, label in enumerate(ESCALATION):
+        x = chip_x[k]
+        done = k == n - 1
+        col = t["a3"] if done else (t["a2"] if k == 0 else t["a1"])
+        a(f'<rect x="{f(x)}" y="{ly - 17}" width="{cw}" height="34" rx="17" fill="{t["pill_fill"]}" stroke="{t["hair"]}"/>')
+        a(f'<g opacity="0.0"><animate attributeName="opacity" values="0;0;1;1;0;0" '
+          f'keyTimes="{kt(0, lit[k] - 0.15, lit[k], reset, reset + 0.3, T)}" dur="{T}s" repeatCount="indefinite"/>'
+          f'<rect x="{f(x)}" y="{ly - 17}" width="{cw}" height="34" rx="17" fill="{col}" filter="url(#pglow)" opacity="0.3"/>'
+          f'<rect x="{f(x)}" y="{ly - 17}" width="{cw}" height="34" rx="17" fill="{t["pill_fill"]}" stroke="{col}" stroke-width="1.4"/>'
+          f'</g>')
+        a(f'<circle cx="{f(x + 18)}" cy="{ly}" r="3.5" fill="{col}"/>')
+        a(f'<text x="{f(x + 30)}" y="{ly + 4.5}" font-family="{MONO}" font-size="12.5" fill="{t["text"]}">{esc(label)}</text>')
+
+    a(f'<text x="40" y="{PH - 22}" font-family="{MONO}" font-size="11.5" fill="{t["muted"]}">'
+      f'each tier gets a window to acknowledge before the next one is paged</text>')
+    a("</g>")
+    a(f'<rect x="0.5" y="0.5" width="{PW - 1}" height="{PH - 1}" rx="23.5" fill="none" stroke="{t["hair"]}"/>')
+    a(f'<rect x="0.5" y="0.5" width="{PW - 1}" height="{PH - 1}" rx="23.5" fill="none" stroke="url(#paccent)" '
+      f'stroke-width="1.4" pathLength="1000" stroke-dasharray="180 320" opacity="0.6">'
+      f'<animate attributeName="stroke-dashoffset" values="0;-1000" dur="14s" repeatCount="indefinite"/></rect>')
+    a("</svg>")
+    return "\n".join(o) + "\n"
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--photo", help="portrait photo to convert to ASCII (needs Pillow)")
@@ -520,6 +661,10 @@ def main():
         path = os.path.join(args.out, f"{name}.svg")
         with open(path, "w", encoding="utf-8") as fh:
             fh.write(build(name, theme, rows))
+        print(f"wrote {os.path.normpath(path)} ({os.path.getsize(path) // 1024} KB)")
+        path = os.path.join(args.out, f"pipeline-{name}.svg")
+        with open(path, "w", encoding="utf-8") as fh:
+            fh.write(build_pipeline(name, theme))
         print(f"wrote {os.path.normpath(path)} ({os.path.getsize(path) // 1024} KB)")
 
 
