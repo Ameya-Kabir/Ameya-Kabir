@@ -59,11 +59,90 @@ I build **automation that holds up in production**: enterprise web automation, A
 
 ## `> featured builds`
 
-| Project | What it does | Under the hood | Stack |
-|:--|:--|:--|:--|
-| 🛰️ **Enterprise IT Alerting System** | Always-on watchdog that monitors services and scheduled jobs, raises incidents the moment something fails, and walks them up a **multi-level escalation chain** until someone acknowledges. | Watchdog loop · escalation tiers with timeouts · incident state persisted for audit & reporting | `Java` `Python` `PostgreSQL` `AutomationEdge` |
-| 🗼 **The Tower — BlueStacks HUD Overlay** | Automation overlay for *The Tower* running in BlueStacks: a heads-up display layered over the emulator that reads game state and drives repetitive actions hands-free. | Transparent always-on-top HUD · screen-state detection · scripted input to the emulator | `Python` `BlueStacks` |
-| 💸 **Personal Expense Tracker** | Full-stack tracker for logging spending, categorising transactions and seeing where the money actually goes month over month. | Normalised PostgreSQL schema · REST API · aggregate queries powering the dashboard | `PostgreSQL` `Node.js` `Express` `JavaScript` |
+<sub><code>5 builds</code> &nbsp;·&nbsp; tap a row to expand</sub>
+
+<details open>
+<summary><b>🟢 <code>DEPLOYED</code>&nbsp; Epic Healthcare Referral Bots</b>&nbsp; <sub><code>ENTERPRISE</code></sub></summary>
+<br>
+
+> **▸ What it does**<br>
+> Automated referral <b>intake, response and monitoring</b> bots for Epic, deployed across major healthcare clients — <b>Yale</b>, <b>UNC</b> and <b>Hartford</b>.
+
+> **⚙ Under the hood**<br>
+> `Headless browser automation` · `DOM state polling` · `Database update queries`
+
+<p>
+  <img src="https://img.shields.io/badge/Java-0F172A?style=flat-square&logo=openjdk&logoColor=22D3EE" alt="Java">&nbsp;<img src="https://img.shields.io/badge/Selenium-0F172A?style=flat-square&logo=selenium&logoColor=22D3EE" alt="Selenium">&nbsp;<img src="https://img.shields.io/badge/SQL-0F172A?style=flat-square" alt="SQL">
+</p>
+
+</details>
+
+<details>
+<summary><b>🟢 <code>LIVE</code>&nbsp; Enterprise IT Alerting System</b>&nbsp; <sub><code>ENTERPRISE</code></sub></summary>
+<br>
+
+> **▸ What it does**<br>
+> Always-on watchdog that monitors services, raises incidents on failure, and walks them up a <b>multi-level escalation chain</b> via email and <b>Voximplant</b> phone calls.
+
+> **⚙ Under the hood**<br>
+> `Watchdog loop` · `Escalation tiers with timeouts` · `State persistence`
+
+<p>
+  <img src="https://img.shields.io/badge/Python-0F172A?style=flat-square&logo=python&logoColor=10B981" alt="Python">&nbsp;<img src="https://img.shields.io/badge/PostgreSQL-0F172A?style=flat-square&logo=postgresql&logoColor=10B981" alt="PostgreSQL">&nbsp;<img src="https://img.shields.io/badge/AutomationEdge-0F172A?style=flat-square&logo=data:image%2Fsvg%2Bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI%2BPHBhdGggZmlsbD0iIzM0RDM5OSIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMTEgMmgydjNoNWEyIDIgMCAwIDEgMiAydjEwYTIgMiAwIDAgMS0yIDJINmEyIDIgMCAwIDEtMi0yVjdhMiAyIDAgMCAxIDItMmg1VjJ6TTggMTBhMS41IDEuNSAwIDEgMCAwIDMgMS41IDEuNSAwIDAgMCAwLTN6bTggMGExLjUgMS41IDAgMSAwIDAgMyAxLjUgMS41IDAgMCAwIDAtM3pNOCAxNXYxLjVoOFYxNUg4ek0xIDloMnY2SDF6TTIxIDloMnY2aC0yeiIvPjwvc3ZnPg%3D%3D&logoColor=22D3EE" alt="AutomationEdge">
+</p>
+
+</details>
+
+<details>
+<summary><b>🚀 <code>LIVE</code>&nbsp; Finstash</b>&nbsp; <sub><code>FULL-STACK</code></sub></summary>
+<br>
+<a href="https://finstash.net"><img src="https://img.shields.io/badge/%E2%86%97%20OPEN%20LIVE%20APP-finstash.net-10B981?style=for-the-badge&labelColor=0F172A" alt="Open finstash.net"></a>
+&nbsp;<b><a href="https://finstash.net">finstash.net</a></b>
+
+
+> **▸ What it does**<br>
+> Full-stack personal finance and expense tracking web app, with custom <b>carpool tracking</b> and <b>investment portfolio</b> modules.
+
+> **⚙ Under the hood**<br>
+> `Normalised PostgreSQL schema` · `REST API` · `Aggregate queries powering the dashboard`
+
+<p>
+  <img src="https://img.shields.io/badge/Python-0F172A?style=flat-square&logo=python&logoColor=A78BFA" alt="Python">&nbsp;<img src="https://img.shields.io/badge/PostgreSQL-0F172A?style=flat-square&logo=postgresql&logoColor=A78BFA" alt="PostgreSQL">&nbsp;<img src="https://img.shields.io/badge/JavaScript-0F172A?style=flat-square&logo=javascript&logoColor=A78BFA" alt="JavaScript">
+</p>
+
+</details>
+
+<details>
+<summary><b>🛠️ <code>ACTIVE</code>&nbsp; Dynamic XPath DOM Inspector</b>&nbsp; <sub><code>TOOLING</code></sub></summary>
+<br>
+
+> **▸ What it does**<br>
+> Custom Chrome extension that generates <b>resilient, dynamic XPaths</b> and inspects DOM elements on the fly.
+
+> **⚙ Under the hood**<br>
+> `Background service workers` · `DOM mutation observers` · `Injected UI overlay`
+
+<p>
+  <img src="https://img.shields.io/badge/Vanilla%20JS-0F172A?style=flat-square&logo=javascript&logoColor=22D3EE" alt="Vanilla JS">&nbsp;<img src="https://img.shields.io/badge/Chrome%20Extension%20APIs-0F172A?style=flat-square&logo=googlechrome&logoColor=22D3EE" alt="Chrome Extension APIs">&nbsp;<img src="https://img.shields.io/badge/HTML%20%2B%20CSS-0F172A?style=flat-square&logo=html5&logoColor=22D3EE" alt="HTML + CSS">
+</p>
+
+</details>
+
+<details>
+<summary><b>🎮 <code>ACTIVE</code>&nbsp; The Tower Game Automation</b>&nbsp; <sub><code>PERSONAL</code></sub></summary>
+<br>
+
+> **▸ What it does**<br>
+> Complete automation tool for the mobile game <i>The Tower</i> running in BlueStacks — reads game state and drives repetitive farming hands-free.
+
+> **⚙ Under the hood**<br>
+> `ADB control logic` · `Screen-state detection` · `Transparent Tkinter HUD overlay` · `Telemetry logging`
+
+<p>
+  <img src="https://img.shields.io/badge/Python-0F172A?style=flat-square&logo=python&logoColor=10B981" alt="Python">&nbsp;<img src="https://img.shields.io/badge/Tkinter-0F172A?style=flat-square&logo=python&logoColor=10B981" alt="Tkinter">&nbsp;<img src="https://img.shields.io/badge/BlueStacks%20%2F%20ADB-0F172A?style=flat-square&logo=android&logoColor=10B981" alt="BlueStacks %2F ADB">
+</p>
+
+</details>
 
 <br>
 
